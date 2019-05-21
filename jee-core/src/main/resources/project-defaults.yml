@@ -1,0 +1,15 @@
+thorntail:
+  datasources:
+    jdbc-drivers:
+      com.mysql:
+        driver-class-name: com.mysql.jdbc.Driver
+        xa-datasource-class-name: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+        driver-module-name: com.mysql
+    data-sources:
+      MyDB:
+        driver-name: com.mysql
+        connection-url: jdbc:mysql://localhost:3306/mydb
+        user-name: myuser
+        password: me123
+  http:
+    port: 20001
