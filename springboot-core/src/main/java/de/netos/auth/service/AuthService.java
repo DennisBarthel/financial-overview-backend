@@ -42,7 +42,7 @@ public class AuthService {
 		return new LoginResponse(token);
 	}
 	
-	public String registerUser(SignUpRequest signUp) throws LoginException {
+	public void registerUser(SignUpRequest signUp) throws LoginException {
 		if (userRepository.existsByEmail(signUp.getEmail())) {
 			throw new LoginException(ErrorMessage.EMAIL_ALREADY_EXISTS, "Email address already used.");
 		}
@@ -55,7 +55,5 @@ public class AuthService {
 		user.setAuthProvider(AuthProvider.LOCAL);
 		
 		userRepository.save(user);
-		
-		return "User registered successfully";
 	}
 }

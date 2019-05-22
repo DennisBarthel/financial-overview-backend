@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ApiError {
 	
+	@JsonIgnore
 	private final HttpStatus status;
     private final String message;
     private final List<String> errors;

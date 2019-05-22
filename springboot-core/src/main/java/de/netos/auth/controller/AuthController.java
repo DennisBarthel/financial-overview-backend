@@ -14,7 +14,6 @@ import de.netos.auth.login.LoginRequest;
 import de.netos.auth.login.LoginResponse;
 import de.netos.auth.service.AuthService;
 import de.netos.auth.signup.SignUpRequest;
-import de.netos.auth.signup.SignUpResponse;
 
 @RestController
 @RequestMapping(path = "/auth", consumes = "application/json")
@@ -31,9 +30,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<SignUpResponse> registerUser(@Valid @RequestBody SignUpRequest request) throws LoginException {
-		String registerUser = authService.registerUser(request);
-		
-		return ResponseEntity.ok(new SignUpResponse(true));
+	public void registerUser(@Valid @RequestBody SignUpRequest request) throws LoginException {
+		authService.registerUser(request);
 	}
 }

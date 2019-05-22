@@ -9,6 +9,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +30,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({
 		AccountException.class,
 		PeriodException.class,
-		LoginException.class
+		LoginException.class,
+		AuthenticationException.class
 	})
 	public final ResponseEntity<ApiError> handleCustomException(Exception exception, WebRequest request) {
 		logger.error(exception.getMessage(), exception);
@@ -44,6 +46,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			return new ResponseEntity<>(apiError, apiError.getStatus());
 		} else if (exception instanceof LoginException) {
 			ApiError apiError = handleLoginException((LoginException) exception);
+			
+			return new ResponseEntity<>(apiError, apiError.getStatus());
+		} else if (exception instanceof AuthenticationException) {
+			ApiError apiError = handleAuthenticationException((AuthenticationException) exception);
 			
 			return new ResponseEntity<>(apiError, apiError.getStatus());
 		} else {
@@ -61,6 +67,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	private ApiError handleLoginException(LoginException exception) {
 		return new ApiError(HttpStatus.BAD_REQUEST, exception.getErrorMessage().name(), exception.getMessage());
+	}
+	
+	private ApiError handleAuthenticationException(AuthenticationException exception) {
+		return new ApiError(HttpStatus.BAD_REQUEST, exception.getMessage(), exception.getMessage());
 	}
 	
 	@Override
