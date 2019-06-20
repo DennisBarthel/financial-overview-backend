@@ -6,7 +6,6 @@ public class ModifyAccountDTO {
 	private String name;
 	private String number;
 	private Currency currency;
-	private String owner;
 
 	public ModifyAccountDTO() {
 	}
@@ -16,15 +15,13 @@ public class ModifyAccountDTO {
 		this.name = account.getName();
 		this.number = account.getNumber();
 		this.currency = account.getCurrency();
-		this.owner = account.getOwner();
 	}
 
-	public ModifyAccountDTO(AccountType type, String name, String number, Currency currency, String owner) {
+	public ModifyAccountDTO(AccountType type, String name, String number, Currency currency) {
 		this.type = type;
 		this.name = name;
 		this.number = number;
 		this.currency = currency;
-		this.owner = owner;
 	}
 
 	public AccountType getType() {
@@ -57,13 +54,5 @@ public class ModifyAccountDTO {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
 	}
 }

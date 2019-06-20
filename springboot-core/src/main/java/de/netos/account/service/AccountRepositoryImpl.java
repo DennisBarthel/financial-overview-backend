@@ -9,7 +9,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,19 +49,15 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
 		}
 	}
 
-	public List<AccountDTO> getAllAccountsByOwner(String owner) {
+	public List<AccountDTO> getAllAccounts() {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<AccountDTO> query = builder.createQuery(AccountDTO.class);
 
 		Root<Account> root = query.from(Account.class);
 		query.select(builder.construct(AccountDTO.class, root.get(Account_.ACCOUNT_ID),
 				root.get(Account_.ACCOUNT_TYPE), root.get(Account_.NUMBER), root.get(Account_.CURRENCY),
-				root.get(Account_.OWNER), root.get(Account_.NAME)));
+				root.get(Account_.NAME)));
 		
-		Predicate equal = builder.equal(root.get(Account_.OWNER), owner);
-		
-		query.where(equal);
-
 		return em.createQuery(query).getResultList();
 	}
 
@@ -78,10 +73,18 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
 	}
 	
 	@Override
-	public AccountDTO getAccountDTOByAccountId(String accountId) {
+	public AccountDTO getAccountDTOByAccountId(String accountId) throws AccountException {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<AccountDTO> query = builder.createQuery(AccountDTO.class);
+
+		Root<Account> root = query.from(Account.class);
+		query.select(builder.construct(AccountDTO.class, root.get(Account_.ACCOUNT_ID),
+				root.get(Account_.ACCOUNT_TYPE), root.get(Account_.NUMBER), root.get(Account_.CURRENCY),
+				root.get(Account_.NAME)));
 		
+		query.where(builder.equal(root.get(Account_.ACCOUNT_ID), accountId));
 		
-		return null;
+		return executeSingleResultQuery(query, () -> String.format("No account found for %s", accountId));
 	}
 	
 	@Override

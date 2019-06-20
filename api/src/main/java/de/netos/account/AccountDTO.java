@@ -6,18 +6,16 @@ public class AccountDTO {
 	private AccountType type;
 	private String number;
 	private Currency currency;
-	private String owner;
 	private String name;
 
 	public AccountDTO() {
 	}
 
-	public AccountDTO(String id, AccountType type, String number, Currency currency, String owner, String name) {
+	public AccountDTO(String id, AccountType type, String number, Currency currency, String name) {
 		this.id = id;
 		this.type = type;
 		this.number = number;
 		this.currency = currency;
-		this.owner = owner;
 		this.name = name;
 	}
 
@@ -51,14 +49,6 @@ public class AccountDTO {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
 	}
 
 	public String getName() {

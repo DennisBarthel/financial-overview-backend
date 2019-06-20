@@ -10,7 +10,7 @@ public interface AccountRepositoryCustom {
 	
 	void persistAccount(Account account) throws AccountException;
 
-	List<AccountDTO> getAllAccountsByOwner(String owner);
+	List<AccountDTO> getAllAccounts();
 	
 	Account getAccountByAccountId(String accountId) throws AccountException;
 	

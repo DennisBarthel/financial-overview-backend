@@ -13,7 +13,7 @@ public class AccountMapper {
 	Account mapJSONToEntity(CreateAccountDTO accountJson) {
 		String accountId = DigestUtils.md5Hex(accountJson.getNumber()).toUpperCase();
 		return new Account(accountJson.getType(), accountJson.getName(), accountJson.getNumber(), accountId,
-				accountJson.getCurrency(), accountJson.getOwner());
+				accountJson.getCurrency());
 	}
 
 	void mapJSONToEntity(Account entity, ModifyAccountDTO json) {
@@ -21,6 +21,5 @@ public class AccountMapper {
 		entity.setCurrency(json.getCurrency());
 		entity.setName(json.getName());
 		entity.setNumber(json.getNumber());
-		entity.setOwner(json.getOwner());
 	}
 }

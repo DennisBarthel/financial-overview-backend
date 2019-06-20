@@ -29,10 +29,10 @@ public class AccountService {
 		accountRepository.persistAccount(account);
 	}
 	
-	public List<AccountOverviewDTO> getAccounts(String owner) {
+	public List<AccountOverviewDTO> getAccounts() {
 		List<AccountOverviewDTO> resultList = new ArrayList<>();
 
-		List<AccountDTO> allAccounts = accountRepository.getAllAccountsByOwner(owner);
+		List<AccountDTO> allAccounts = accountRepository.getAllAccounts();
 		for (AccountDTO accountDTO : allAccounts) {
 			resultList.add(new AccountOverviewDTO(accountDTO,
 					0d, YearMonth.now()));
@@ -51,7 +51,12 @@ public class AccountService {
 		accountRepository.deleteAccountByAccountId(accountId);
 	}
 
-	public AccountDetailsDTO getAccountDetails(String accountId) {
-		return null;
+	public AccountDetailsDTO getAccountDetails(String accountId) throws AccountException {
+		AccountDTO accountDTO = accountRepository.getAccountDTOByAccountId(accountId);
+		
+		AccountDetailsDTO accountDetailsDTO = new AccountDetailsDTO();
+		accountDetailsDTO.setAccount(accountDTO);
+		
+		return accountDetailsDTO;
 	}
 }

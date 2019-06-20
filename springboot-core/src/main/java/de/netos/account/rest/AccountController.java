@@ -21,7 +21,7 @@ import de.netos.account.service.AccountService;
 
 @RestController
 @RequestMapping(
-		path = "/v1/account",
+		path = "/account",
 		consumes = "application/json",
 		produces = "application/json")
 public class AccountController {
@@ -31,7 +31,7 @@ public class AccountController {
 
 	@GetMapping(path = "/", produces = "application/json")
 	public List<AccountOverviewDTO> getAccounts() {
-		return accountService.getAccounts(null);
+		return accountService.getAccounts();
 	}
 	
 	@PostMapping("/create")
@@ -52,7 +52,7 @@ public class AccountController {
 	}
 	
 	@GetMapping("/details/{accountId}")
-	public AccountDetailsDTO getAccountDetails(@PathVariable("accountId") String accountId) {
+	public AccountDetailsDTO getAccountDetails(@PathVariable("accountId") String accountId) throws AccountException {
 		return accountService.getAccountDetails(accountId);
 	}
 }

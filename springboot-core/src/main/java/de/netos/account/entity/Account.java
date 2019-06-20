@@ -43,23 +43,18 @@ public class Account {
 	@Enumerated(EnumType.STRING)
 	private Currency currency;
 
-	@NotBlank
-	private String owner;
-	
 	@OneToMany(mappedBy = "account")
 	private List<Period> periods = new ArrayList<>();
 	
 	public Account() {
 	}
 
-	public Account(AccountType accountType, String name, String number, String accountId, Currency currency,
-			String owner) {
+	public Account(AccountType accountType, String name, String number, String accountId, Currency currency) {
 		this.accountType = accountType;
 		this.name = name;
 		this.number = number;
 		this.accountId = accountId;
 		this.currency = currency;
-		this.owner = owner;
 	}
 
 	public Long getId() {
@@ -84,14 +79,6 @@ public class Account {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public void setOwner(String owner) {
-		this.owner = owner;
 	}
 
 	public AccountType getAccountType() {
